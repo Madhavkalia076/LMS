@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Udemy - LMS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Mini Udemy LMS</h1>
+  </header>
+
+  <div class="container">
+    <!-- Authentication -->
+    <section id="auth">
+      <h2>Login</h2>
+      <input type="text" id="login-email" class="form-control" placeholder="Email">
+      <input type="password" id="login-password" class="form-control" placeholder="Password">
+      <button class="btn" onclick="login()">Login</button>
+
+      <h2>Register</h2>
+      <input type="text" id="register-name" class="form-control" placeholder="Name">
+      <input type="text" id="register-email" class="form-control" placeholder="Email">
+      <input type="password" id="register-password" class="form-control" placeholder="Password">
+      <button class="btn" onclick="register()">Register</button>
+    </section>
+
+    <!-- Course Display -->
+    <section class="course-list" id="courses">
+      <h2>Available Courses</h2>
+      <div id="course-container"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
