@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
+require("./models/User");
+require("./models/Course");
+require("./models/Quiz");
+require("./models/Lesson");
+require("./models/Question"); // ✅ This fixes your error
+
 
 dotenv.config();
 const app = express();
@@ -15,6 +21,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.get("/", (req, res) => {
   res.redirect("/login"); // or render a homepage instead
+});
+app.get("/courses/:id", (req, res) => {
+  res.render("course", { courseId: req.params.id });
 });
 
 // API routes

@@ -1,32 +1,35 @@
+document.addEventListener("DOMContentLoaded", () => {
+  fetchCourses();
+});
+
 async function fetchCourses() {
-  const res = await fetch("/api/courses");
-  const courses = await res.json();
-  const list = document.getElementById("coursesList");
-
-  courses.forEach(course => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <h3>${course.title}</h3>
-      <p>${course.description}</p>
-      <button onclick="enroll('${course._id}')">Enroll</button>
-      <a href="/courses/${course._id}">View Course</a>
-      <hr/>
-    `;
-    list.appendChild(div);
-  });
-}
-
-async function enroll(courseId) {
   const token = localStorage.getItem("token");
-  if (!token) return alert("Please login");
-
-  const res = await fetch(`/api/courses/enroll/${courseId}`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` }
+  const res = await fetch("/api/courses", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   });
 
   const data = await res.json();
-  alert(data.message || "Enrolled");
-}
+  const container = document.getElementById("coursesList");
 
-fetchCourses();
+  if (!Array.isArray(data)) {
+    container.innerHTML = "<p>Failed to load courses.</p>";
+    return;
+  }
+
+  data.forEach((course) => {
+    const courseElement = document.createElement("div");
+    courseElement.classList.add("card");
+
+    courseElement.innerHTML = `
+      <h3>${course.title}</h3>
+      <p>${course.description}</p>
+      <p><strong>Instructor:</strong> ${course.instructor}</p>
+      <p><strong>Price:</strong> ₹${course.price}</p>
+      <a class="btn" href="/courses/${course._id}">Go to Course</a>
+    `;
+
+    container.appendChild(courseElement);
+  });
+}
